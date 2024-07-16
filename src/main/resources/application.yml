@@ -1,0 +1,15 @@
+spring:
+  config:
+    import: aws-secretsmanager:sqs-creds
+  application:
+    name: sqs-poc
+  cloud:
+    aws:
+      credentials:
+        access-key: ${access_key}
+        secret-key: ${secret_key}
+      region:
+        static: us-east-1
+sqs:
+  queue:
+    url: ${ecomm_queue_url}

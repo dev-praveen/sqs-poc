@@ -1,0 +1,32 @@
+package com.praveen.sqs.config;
+
+import io.awspring.cloud.sqs.config.SqsBootstrapConfiguration;
+import io.awspring.cloud.sqs.config.SqsMessageListenerContainerFactory;
+import io.awspring.cloud.sqs.listener.acknowledgement.handler.AcknowledgementMode;
+import io.awspring.cloud.sqs.operations.SqsTemplate;
+import io.awspring.cloud.sqs.operations.TemplateAcknowledgementMode;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.sqs.SqsAsyncClient;
+
+@Slf4j
+@Configuration
+public class SQSConfig {
+
+  @Bean
+  public SqsAsyncClient sqsAsyncClient() {
+    return SqsAsyncClient.builder().region(Region.US_EAST_1).credentialsProvider(() -> ).build();
+  }
+
+  @Bean
+  SqsMessageListenerContainerFactory<Object> defaultSqsListenerContainerFactory(
+      SqsAsyncClient sqsAsyncClient) {
+    return SqsMessageListenerContainerFactory.builder()
+        .configure(options -> options.acknowledgementMode(AcknowledgementMode.MANUAL))
+        .sqsAsyncClient(sqsAsyncClient)
+        .build();
+  }
+}
