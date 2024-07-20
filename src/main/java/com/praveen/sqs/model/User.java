@@ -3,7 +3,6 @@ package com.praveen.sqs.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record User(
-    int id,
     String name,
     @JsonProperty("username") String userName,
     String email,
