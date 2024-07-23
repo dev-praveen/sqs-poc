@@ -8,7 +8,7 @@ import com.praveen.sqs.model.User;
 
 public interface UserMapper {
 
-  static UserEntity toEntity(User user) {
+  static UserEntity toEntity(User user, String uuid) {
 
     final UserEntity userEntity = new UserEntity();
 
@@ -17,6 +17,7 @@ public interface UserMapper {
     userEntity.setPhone(user.phone());
     userEntity.setEmail(user.email());
     userEntity.setWebsite(user.website());
+    userEntity.setCorrelationId(uuid);
 
     final AddressEntity addressEntity = new AddressEntity();
     addressEntity.setCity(user.address().city());

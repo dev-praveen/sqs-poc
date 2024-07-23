@@ -40,6 +40,9 @@ public class UserEntity implements Serializable {
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private CompanyEntity company;
 
+  @Column(name = "correlation_id", nullable = false, unique = true)
+  private String correlationId;
+
   public void setAddress(AddressEntity address) {
     address.setUser(this);
     this.address = address;

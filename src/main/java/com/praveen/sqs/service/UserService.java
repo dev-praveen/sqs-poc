@@ -14,9 +14,9 @@ public class UserService {
   private final UserRepository userRepository;
 
   @Transactional
-  public Long saveUser(User user) {
+  public Long saveUser(User user, String uuid) {
 
-    final var userEntity = UserMapper.toEntity(user);
+    final var userEntity = UserMapper.toEntity(user, uuid);
     return userRepository.saveAndFlush(userEntity).getId();
   }
 }

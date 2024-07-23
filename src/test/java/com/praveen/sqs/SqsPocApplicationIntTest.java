@@ -15,6 +15,8 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 import java.time.Duration;
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
@@ -76,7 +78,8 @@ class SqsPocApplicationIntTest {
   void shouldReceiveUserAndSaveInDatabase() throws JsonProcessingException {
 
     final var user = getUserJson();
-    sqsTemplate.send(to -> to.queue(queueEndPoint).payload(user));
+    final var uuid = UUID.randomUUID().toString();
+    sqsTemplate.send(to -> to.queue(queueEndPoint).payload(user).header("uuid", uuid));
     await()
         .atMost(Duration.ofSeconds(5))
         .untilAsserted(
@@ -84,6 +87,9 @@ class SqsPocApplicationIntTest {
               final var userEntities = userRepository.findAll();
               assertThat(userEntities).isNotEmpty();
               assertThat(userEntities).hasSize(1);
+
+              final var userEntity = userEntities.get(0);
+              assertThat(userEntity.getCorrelationId()).isEqualTo(uuid);
             });
   }
 }
