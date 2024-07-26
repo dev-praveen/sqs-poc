@@ -23,8 +23,8 @@ public class SQSReceiver {
   public void receiveMessage(
       @Payload User user, Acknowledgement acknowledgement, @Header String uuid) {
 
-    log.info("Message received from SQS:: {}", user);
-    log.info("Correlation id received from SQS:: {}", uuid);
+    log.info("Message received from SQS queue:: {}", user);
+    log.info("Correlation id received from SQS queue:: {}", uuid);
     final var userId = userService.saveUser(user, uuid);
     log.info(
         "User saved successfully in database with id: {} and correlation id: {}", userId, uuid);

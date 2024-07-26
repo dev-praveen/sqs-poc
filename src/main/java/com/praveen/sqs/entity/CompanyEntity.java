@@ -15,7 +15,11 @@ public class CompanyEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_id_generator")
-  @SequenceGenerator(name = "company_id_generator", sequenceName = "company_id_sequence")
+  @SequenceGenerator(
+      name = "company_id_generator",
+      sequenceName = "company_id_sequence",
+      initialValue = 3000,
+      allocationSize = 100)
   private Long id;
 
   @Column(name = "name")

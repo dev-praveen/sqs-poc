@@ -16,7 +16,11 @@ public class UserEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
-  @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_sequence")
+  @SequenceGenerator(
+      name = "user_id_generator",
+      sequenceName = "user_id_sequence",
+      initialValue = 1000,
+      allocationSize = 100)
   private Long id;
 
   @Column(name = "name")
