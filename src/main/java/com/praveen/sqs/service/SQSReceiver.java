@@ -28,6 +28,6 @@ public class SQSReceiver {
     final var userId = userService.saveUser(user, uuid);
     log.info(
         "User saved successfully in database with id: {} and correlation id: {}", userId, uuid);
-    acknowledgement.acknowledge();
+    acknowledgement.acknowledgeAsync();
   }
 }
